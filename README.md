@@ -1,8 +1,6 @@
 
 # Image-based mushroom identification
-- [**@github.com**](https://github.com/Jesssullivan/mo-image-identifier/) <br>
-- [**@github.io**](https://jesssullivan.github.io/mo-image-identifier/) <br>
-- [**Web Annotator @ ai.columbari.us**](https://ai.columbari.us/annotator/photo) <br>
+- [**Web Annotator @ ai.columbari.us**](https://ai.columbari.us/annotator/photo) Credit: JessSullivan <br>
 - [**Artifacts**](#artifacts) <br>
 
 *Local Processing:* <br>
