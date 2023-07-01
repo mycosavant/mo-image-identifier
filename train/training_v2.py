@@ -86,18 +86,17 @@ class TrainV1:
         ]
     )
 
-    base_model = MobileNetV2(input_shape=(img_height, img_width, 3),
-                             include_top=False,
-                             weights='imagenet')
-
-    base_model.trainable = False
-
     model = Sequential([
         data_augmentation,
         layers.experimental.preprocessing.Rescaling(1. / 255),
-        base_model,
-        layers.GlobalAveragePooling2D(),
+        layers.Conv2D(16, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(64, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
         layers.Dropout(0.2),
+        layers.Flatten(),
         layers.Dense(128, activation='relu'),
         layers.Dense(num_classes)
     ])
@@ -129,15 +128,15 @@ class TrainV1:
     mush1_path = tf.keras.utils.get_file('armillaria_tabescens_06', origin=mush1_url)
 
     img = keras.preprocessing.image.load_img(
-mush1_path, target_size=(img_height, img_width)
-)
-img_array = keras.preprocessing.image.img_to_array(img)
-img_array = tf.expand_dims(img_array, 0)
+        mush1_path, target_size=(img_height, img_width)
+    )
+    img_array = keras.preprocessing.image.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0)
 
-predictions = model.predict(img_array)
-score = tf.nn.softmax(predictions[0])
+    predictions = model.predict(img_array)
+    score = tf.nn.softmax(predictions[0])
 
-print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence." .format(class_names[np.argmax(score)],
-                                                                                     100 * np.max(score))
-)
+    print(
+        "This image most likely belongs to {} with a {:.2f} percent confidence." .format(class_names[np.argmax(score)],
+                                                                                         100 * np.max(score))
+    )
