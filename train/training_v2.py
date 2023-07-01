@@ -1,14 +1,24 @@
-```
-This code replaces the previous model architecture from training_v2 with MobileNetV2, a pre-trained model available in Keras.
-MobileNetV2 is known for its efficiency and performance in image classification tasks.
-I've made the necessary changes to incorporate MobileNetV2 into the code, including modifying the architecture and using transfer learning.
-```
-
-
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.models import Sequential
+
+"""
+This code replaces the previous model architecture from training_v2 with MobileNetV2, a pre-trained model available in Keras.
+MobileNetV2 is known for its efficiency and performance in image classification tasks.
+I've made the necessary changes to incorporate MobileNetV2 into the code, including modifying the architecture and using transfer learning.
+
+1. Imported the MobileNetV2 model from tensorflow.keras.applications.
+2. Replaced the layers.Conv2D and layers.MaxPooling2D layers with the base_model obtained from MobileNetV2. This allows us to use the pre-trained MobileNetV2 model as a feature extractor.
+3. Added a layers.GlobalAveragePooling2D layer after the base_model to reduce the spatial dimensions of the features.
+4. Removed the previous layers.Flatten layer since it's no longer needed.
+4. Changed the number of input channels from 1 to 3 in the data_augmentation block to match the RGB format of the images.
+6. Disabled the training of the base_model by setting base_model.trainable = False to use the pre-trained weights.
+7. Adjusted the model summary to reflect the changes in the model architecture.
+These changes enable the use of the MobileNetV2 pre-trained model as a feature extractor for the image classification task.
+"""
+
+
 
 class TrainV1:
     import numpy as np
